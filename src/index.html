@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
+		<title>EULJIRO HAS NO PARK</title>
+		<script>
+			function onclickOption(e) {
+					console.log(e)
+			}
+			function onclickStart() {
+				
+				// form checked values
+				const form = document.querySelector('form')
+
+				const blockerHtml = document.querySelector('#blocker')
+				const animHtml = document.querySelector('.animation-wrapper')
+				const selectPageHtml =  document.querySelector('#introBackground')
+
+				console.log('showintro', blockerHtml)
+
+				blockerHtml.style.visibility = 'visible';
+				animHtml.setAttribute("style", "display: show;");
+				selectPageHtml.setAttribute("style", "display: none;");
+			}	
+			function setLang(lang) {
+				window.LANG = lang
+				window.localStorage.setItem('language', lang)
+			}
+			function setSpecs(spec) {
+				window.VERISON = spec
+				window.localStorage.setItem('version', spec)
+			}
+		</script>
+	</head>
+  <body>
+			<audio id="zone1" loop preload="auto" style="display: none">
+					<source src="../static/assets/sounds/02-noise.ogg" type="audio/ogg">
+			</audio>
+			<audio id="zone2" loop preload="auto" style="display: none">
+				<source src="../static/assets/sounds/chill-lofi.ogg" type="audio/ogg">
+		</audio>
+		<audio id="zone3" loop preload="auto" style="display: none">
+			<source src="../static/assets/sounds/baby-game.ogg" type="audio/ogg">
+	</audio>
+	<audio id="zonepark" loop preload="auto" style="display: none">
+		<source src="../static/assets/sounds/deep-ambient.mp3" type="audio/mpeg">
+</audio>
+			<div id="stats-output"></div>
+			<div id="container"></div>
+			
+
+			<div id="introBackground">
+				<div id="introText">
+						을지로에는 공원이 없다 v.1.0<br />
+						Euljiro Has No Park v.1.0<br />
+						<div id="author"><a href="https://www.instagram.com/sosunnyproject/" target="_blank">Created by @sosunnyproject</a></div>
+								<div class="option-wrapper">
+									<div>언어 / Language</div>
+									<div>
+										<input class="option" type="radio" id="korean" name="lang" value="korean" onclick="setLang('ko')">
+										<label for="korean">korean</label>
+									</div>
+									<div>
+										<input class="option" type="radio" id="english" name="lang" value="english" onclick="setLang('en')">
+										<label for="english">english</label>
+									</div>
+								</div>
+					<button id="nextButton" onclick='onclickStart()'>START</button>
+				</div>
+		</div>
+
+			<div id="blocker">
+					<div id="instructions">
+						을지로에는 공원이 없다 v.1.0<br />
+						<div id="author"><a href="https://www.instagram.com/sosunnyproject/" target="_blank">Created by @sosunnyproject</a><br/>
+							Thanks to <br/>
+							<a href="https://www.instagram.com/c.enter_official/" target="_blank">을지예술센터 Eulji Art Center</a>, 
+							<a href="https://readymag.com/u16519807/1261048/" target="_blank">Co-Producer : 이유준</a>,
+							<a href="https://klovesmart.wixsite.com/mypage" target="_blank">Music : 김자현</a> <br/>
+						</div>
+						
+						<div id="loadingContainer">
+							<div id="loadWrapper">
+								<div class="circle_progress"> 
+									<span class="left"> 
+											<span class="bar"></span> 
+									</span> 
+									<span class="right"> 
+											<span class="bar"></span> 
+									</span>
+								</div>
+							</div>
+							<div id="loadValue"></div>
+						</div>
+
+						<div class="animation-wrapper">
+							<span class="animate animate-1">자연을 잃어버린 미래의 을지로는 천재지변으로 인해</span>
+							<span class="animate animate-2">3개 구역으로 쪼개졌고, 그 중심에 공원이 생겼다.</span>
+							<span class="animate animate-3">보행자는 오직 공원을 통해 이동하고, 에너지를 충전한다.</span>
+							<span class="animate animate-4">테크🤖JIRO, 힙🕶️JIRO, 빌딩🏗️JIRO를 유람할 수 있다.</span>
+							<span class="animate animate-5">...</span>
+							<span class="animate animate-6">컨트롤러 A 버튼 (키보드 i) 을 누르면</span>
+							<span class="animate animate-7">플레이 중에도 작동 방법과 설명을 볼 수 있다.</span>
+							<span class="animate animate-8">시작하려면 B 버튼!!을 누르거나 마우스로 화면을 클릭한다.</span>
+							<span class="animate animate-9">...</span>
+						</div>
+
+					</div>
+			</div>
+
+			<div class="popup">
+				<div class="popupContent" id="howtoContent">
+					<span style="color: rgb(0, 255, 255)"> 안내 설명</span>
+					<div id="howtoPage"> 
+						<span style="color:#f9e661">개인 컴퓨터</span>로 감상하는 방법<br/>
+						- 키보드 WASD 혹은 ⬅️⬆️⬇️➡️ 로 앞, 뒤, 좌, 우로 움직인다. <br/>
+						- 마우스로 시야 방향을 조정한다.<br/>
+						- i 키를 누르면 설명 창을 끄고 킬 수 있다. <br />
+						- 새로고침 후, 인트로 화면을 클릭! 바로 1인칭 컨트롤 모드가 시작된다.<br/>
+						- ESC를 누르면 플레이 모드에서 벗어날 수 있다.<br/>
+						- 단, 컴퓨터 사양이 낮으면 화면이 흔들리거나 로딩이 오래 걸릴 수 있다.<br/>
+						- 컴퓨터 사양은 nvidia 그래픽 카드 기준, GTX 1060이상을 권장한다.<br />
+					</div>	
+					<img id="howtoGamepad" alt="how to play with gamepad" src="../static/assets/png/gamepadMin.jpg" />
+					<div id="howtoPageBottom">
+						키보드:
+						⬅️➡️페이지 이동,
+						<img class="btnImage" alt="keyboard i key" src="../static/assets/png/btni.jpg" /> 열고 닫기 <br />
+						게임패드: 
+						<img class="btnImage" alt="gamepad A button" src="../static/assets/png/btna.jpg" /> 페이지 이동,
+						<img class="btnImage" alt="gamepad X button" src="../static/assets/png/btnx.jpg" /> 닫기)<br />
+					</div>
+				</div>
+		</div>
+		<div class="descPopup">
+			<div class="popupContent" id="descContent">
+			</div>
+		</div>
+
+			<div class="energyContainer">
+					<div class="energyBar label">
+						ENERGY 체력
+					</div>
+					<div class="energyBar">
+						<progress id="energy" max="100" value="100"></progress>
+					</div>
+			</div>
+    <canvas class="webgl"></canvas>
+  </body>
+</html>

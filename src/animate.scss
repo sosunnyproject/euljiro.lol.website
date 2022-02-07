@@ -1,0 +1,68 @@
+// https://codepen.io/atled/pen/ajQZvg?editors=1101
+//variables for text animation
+$class-slug: animate;
+$total-element: 9;
+@use 'sass:map';
+
+body {
+//   font-size: 24px;
+  line-height: 48px;
+  font-weight: 400;
+  letter-spacing: 0.8px;
+  min-width: 320px;
+}
+
+.animation-wrapper {
+  text-align: center;
+  height: 80vh;
+  width: 100vw;
+  overflow: hidden;
+//   line-height: 48px;
+//   background: #f55;
+  position: relative;
+  color: #ffffff;
+  box-sizing: border-box;
+}
+
+.#{$class-slug} {
+  display: inline-block;
+  vertical-align: top;
+  width: 100%;
+  margin-bottom: 16px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  animation: zoomInFade 30s linear 20s infinite forwards;
+}
+
+@for $i from 0 through $total-element {
+
+    .#{$class-slug}-#{$i} {
+      animation-delay: #{$i * 2 + 0.5}#{s};
+    }
+}
+
+@keyframes zoomInFade {
+  0% {
+    opacity: 0;
+    top: 100%;
+    visibility: hidden;
+  }  
+  50% {
+    opacity: 1;
+    top: 30%;
+    visibility: visible;
+  }
+  75% {
+    top: 0;
+    opacity: 0.2;
+    visibility: hidden;
+  }
+  100% {
+    opacity: 0;
+    top: 0;
+    visibility: hidden;
+  }
+}
+
