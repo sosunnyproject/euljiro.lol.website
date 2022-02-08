@@ -236,22 +236,36 @@ function isZoneChanged(zone) {
 
 function notifyZones(zone) {
   console.log("loadZones called, ZONE_CHANGED? ", zone, window.ZONE_CHANGED)
+  
+  const lang =  window.localStorage.getItem('language')
+  let notice1, notice2, notice3, notice4;
+  if(lang == 'en') {
+    notice1 = "Zone 1: TECH-JIRO"
+    notice2 = "Zone 2: HIP-JIRO"
+    notice3 = "Zone 3: BUILDING-JIRO"
+    notice4 = "ZONE PARK: Recharge Your Energy"
+  } else {
+    notice1 = "1구역 테크JIRO입니다."
+    notice2 = "2구역 힙JIRO입니다."
+    notice3 = "3구역 빌딩JIRO입니다."
+    notice4 = "에너지를 충전할 수 있는 공원입니다."
+  }
 
   switch(zone) {
     case "ONE":
-      showDescription("1구역 테크JIRO입니다.")
+      showDescription(notice1)
       window.ZONE_CHANGED = true
       break;
     case "TWO":
-      showDescription("2구역 힙JIRO입니다.")
+      showDescription(notice2)
       window.ZONE_CHANGED = true
       break;
     case "THREE":
-      showDescription("3구역 빌딩JIRO입니다.")
+      showDescription(notice3)
       window.ZONE_CHANGED = true
       break;
     case "PARK":
-      showDescription("에너지를 충전할 수 있는 공원입니다.")
+      showDescription(notice4)
       window.ZONE_CHANGED = true
       break;   
   }

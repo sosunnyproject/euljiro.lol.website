@@ -1,5 +1,6 @@
 import * as THREE from 'three';
-import { slide1, slide3, slide4 } from './instructionScript';
+import { koSlide1, koSlide3, koSlide4 } from './instructionKO';
+import { enSlide1, enSlide3, enSlide4 } from './instructionEN';
 
 export function getRandomArbitrary(min, max) {
  return Math.random() * (max - min) + min;
@@ -50,18 +51,19 @@ let currLoaded = 0;
 
 export function updateLoadingProgress(max) {
   // Load Progress Bar
-  var leftBar = document.querySelector('.left .bar');
-  var rightBar = document.querySelector('.right .bar');
-  var per = document.querySelector('#loadValue');
+  let leftBar = document.querySelector('.left .bar');
+  let rightBar = document.querySelector('.right .bar');
+  let notice = document.querySelector('#loadNotice');
+  let lang =  window.localStorage.getItem('language')
 
   currLoaded += 1
   let value = Math.floor((currLoaded / max) * 100)
   console.log("update loading: ", currLoaded)
 
   if(value < 100) {
-    per.innerHTML='로딩중... Loading...';
+    notice.innerHTML='로딩중... Loading...';
   } else if (value >= 100) {
-    per.innerHTML=`로딩이 완료되었습니다. <br> 시작하려면 화면을 클릭하거나 <br> 게임패드 B 버튼을 눌러주세요.`
+      notice.innerHTML = `로딩이 완료되었습니다. <br> Ready to Start.`
   }
   if (value <= 50) {
     var degree = 18*value/5;
@@ -154,6 +156,7 @@ export async function showHowto(num) {
   const maxPage = 4;
   const gamepadPage = document.querySelector("#howtoGamepad") // page 2
   const contentPage = document.querySelector("#howtoPage") // page 1, 3, 4
+  const lang =  window.localStorage.getItem('language')
   
   window.HOWTOPAGE += num;
   if(window.HOWTOPAGE > maxPage) {  // not higher than max
@@ -173,6 +176,18 @@ export async function showHowto(num) {
   } else {
     gamepadPage.style.display = 'none';
     contentPage.style.display = 'block';
+  }
+
+  // language setting
+  let slide1, slide3, slide4;
+  if(lang === 'en') {
+    slide1 = enSlide1
+    slide3 = enSlide3
+    slide4 = enSlide4
+  } else {
+    slide1 = koSlide1;
+    slide3 = koSlide3;
+    slide4 = koSlide4;
   }
 
   switch(window.HOWTOPAGE) {

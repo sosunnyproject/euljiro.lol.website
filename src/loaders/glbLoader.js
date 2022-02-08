@@ -8,7 +8,8 @@ const robotHead = {
   scale: 3,
   type: "monument",
   name: "robotFace",
-  desc: "세운 상가 뒷편에 버려졌던 내가 이렇게 다시 태어났어"
+  ko: "세운 상가 뒷편에 버려졌던 내가 이렇게 다시 태어났어",
+  en: "I was once abandoned in Sewoon, but now I'm here."
 }
 
 const coffeeSpa = {
@@ -18,7 +19,8 @@ const coffeeSpa = {
   scale: 400,
   type: "monument",
   name: "coffeeSpa",
-  desc: "을지로에 있는 모든 커피를 마셨더니 온몸이 들썩들썩"
+  ko: "을지로에 있는 모든 커피를 마셨더니 온몸이 들썩들썩",
+  en: "I drrrank all the coffffeeee in this areaaaa"
 }
 
 const excavator = {
@@ -28,7 +30,8 @@ const excavator = {
   scale: 350,
   type: "monument",
   name: "excavator",
-  desc: "언제나 항상 공사중. 올라올테면 올라와 보시지.",
+  ko: "언제나 항상 공사중. 올라올테면 올라와 보시지.",
+  en: "Always under construction. Climb up if you dare."
 }
 
 export const MONUMENTS_MODELS = [
@@ -41,7 +44,9 @@ const tigerlily = {
   rx: 0, ry: Math.PI/6.0, rz: 0,
   scale: 150,
   zone: 4,
-  name: "을지로에 남아있던 마지막 꽃, 나는 Tiger Lily"
+  name: "tiger lily",
+  ko: "을지로에 남아있던 마지막 꽃, 나는 Tiger Lily",
+  en: "The one and only flower left in old Euljiro, Tiger Lily"
 }
 
 const squirrel = {
@@ -50,7 +55,9 @@ const squirrel = {
   rx: 0, ry: -Math.PI/6.0, rz: 0,
   scale: 150,
   zone: 4,
-  name: "나는야 공원을 지키는 우람한 다람쥐"
+  name: "squirrel",
+  ko: "나는야 공원을 지키는 우람한 다람쥐",
+  en: "Welcome to the park!"
 }
 
 const parkCat = {
@@ -59,7 +66,9 @@ const parkCat = {
   rx: 0, ry: Math.PI/6.0, rz: 0,
   scale: 150,
   zone: 4,
-  name: "잔디를 꾸욱~꾹~"
+  name: "cat",
+  ko: "잔디를 꾸욱~꾹~",
+  en: "mew meow mew meow"
 }
 
 const pinkBench = {
@@ -68,7 +77,9 @@ const pinkBench = {
   rx: 0, ry: Math.PI/4.0, rz: 0,
   scale: 1,
   zone: 4,
-  name: "잔디밭에 잠시 앉아 쉬어가"
+  name: "pink bench",
+  ko: "잔디밭에 잠시 앉아 쉬어가",
+  en: "Why hurry? Take some rest here."
 }
 const blueBench = {
   url: 'models/park/blueBench.glb',
@@ -76,7 +87,9 @@ const blueBench = {
   rx: 0, ry: Math.PI/4.0, rz: 0,
   scale: 1,
   zone: 4,
-  name: "잔디와 함께 바람도 쐬고 쉬었다 가"
+  name: "blue bench",
+  ko: "잔디와 함께 바람도 쐬고 쉬었다 가",
+  en: "Feel this breeze and peace~"
 }
 
 export const ZONE_PARK_MODELS = [ 
@@ -91,7 +104,8 @@ const robotBird = {
   rx: 0, ry: -Math.PI/4.0, rz: 0,
   zone: 1,
   name: "robotBird",
-  desc: "내 날개 어때? 요즘은 진짜 새 같은 피부도 만든다니까?"
+  ko: "내 날개 어때? 요즘은 진짜 새 같은 피부도 만든다니까?",
+  en: "Don't my wings look legit?? I love it."
 }
 
 const robotCrane = {
@@ -102,7 +116,8 @@ const robotCrane = {
   scale: 20,
   zone: 1,
   name: "robotCrane",
-  desc: "나는 그저 로봇과 인간이 평화롭게 공존하길 바랄 뿐이야"
+  ko: "나는 그저 로봇과 인간이 평화롭게 공존하길 바랄 뿐이야",
+  en: "I just wish robots and humans find some peace together."
 }
 
 const robotChip = {
@@ -113,7 +128,8 @@ const robotChip = {
   scale: 20,
   zone: 1,
   name: "robotChip",
-  desc: "이 칩이 없으면 로봇도 죽은 몸일 뿐이야."
+  ko: "이 칩이 없으면 로봇도 죽은 몸일 뿐이야.",
+  en: "This mighty chip is everything for robots, eh?"
 }
 
 const robotTiger = {
@@ -123,7 +139,8 @@ const robotTiger = {
   rx: 0, ry: -Math.PI/6.0, rz: 0,
   zone: 1,
   name: "robotTiger",
-  desc: "길거리 생활이 지겨워서 이식 좀 해봤지. 더이상 날 무시하진 않아서 좋긴 하네."
+  ko: "길거리 생활이 지겨워서 이식 좀 해봤지.",
+  en: "I got tired of stray cat life, and did some surgery. No big deal."
 }
 
 const bird1 = {
@@ -133,7 +150,8 @@ const bird1 = {
   rx: 0, ry: Math.PI/3, rz: 0,
   zone: 1,
   name: "bird1",
-  desc: "로봇에게는 인간이, 인간에게는 로봇이 필요할 수 밖에!"
+  ko: "로봇에게는 인간이, 인간에게는 로봇이 필요할 수 밖에!",
+  en: "robots for humans, humans for robots!"
  }
 
 
@@ -144,7 +162,8 @@ const bird2 = {
   rx: 0, ry: 0, rz: 0,
   zone: 1,
   name: "bird2",
-  desc: "고철 솟대도 이렇게 멋진 로봇이 될 수 있다고!"
+  ko: "고철 솟대도 이렇게 멋진 로봇이 될 수 있다고!",
+  en: "Once a metal piece, now a gorgeous robot!"
 }
 
 const bird3 = {
@@ -154,7 +173,8 @@ const bird3 = {
   rx: 0, ry: 0, rz: 0,
   zone: 1,
   name: "bird3",
-  desc: "부품 교체는 좋지만 불법 수술은 절대 안 돼."
+  ko: "부품 교체는 좋지만 불법 수술은 절대 안 돼.",
+  en: "No illegal surgery allowed!!"
 }
 
 const neonsign = {
@@ -164,7 +184,8 @@ const neonsign = {
   rx: 0, ry: -Math.PI/4.0, rz: 0,
   zone: 1,
   name: "neonsign",
-  desc: "규율만 잘 지키면 언제든지 환영이야"
+  ko: "규율만 잘 지키면 언제든지 환영이야",
+  en: "Just keep the rules and you're safe."
 }
 
 const humanworker = {
@@ -174,7 +195,8 @@ const humanworker = {
   rx: 0, ry: Math.PI/3, rz: 0,
   zone: 1,
   name: "humanworker",
-  desc: "로봇 팔이 나보다 정교하니까, 나는 이런 반복 작업이 더 편해"
+  ko: "한 때는 이런 일도 했지. 이제는 그냥 심심해서 하는 거야.",
+  en: "I used to work like this. Now it's just for fun."
 }
 
 const ozRobot = {
@@ -184,7 +206,8 @@ const ozRobot = {
   rx: 0, ry: -Math.PI/6.0, rz: 0,
   zone: 1,
   name: "ozRobot",
-  desc: "나야말로 로봇들의 조상 아니겠어?"
+  ko: "나야말로 로봇들의 조상 아니겠어?",
+  en: "I'm the authentic ancestor of robots."
 }
 
 const robotGuide = {
@@ -194,7 +217,8 @@ const robotGuide = {
   rx: 0, ry: Math.PI/4.0, rz: 0,
   zone: 1,
   name: "robotGuide",
-  desc: "로봇 다리? 인간 팔? 말만 하세요!"
+  ko: "로봇 다리? 인간 팔? 말만 하세요!",
+  en: "Robotic legs? human arms? Whatever you want!"
 }
 
 const neoneyes = {
@@ -204,7 +228,8 @@ const neoneyes = {
  //  posX: getRandomInt(ZONE1_X_MIN, ZONE1_X_MAX), posY: 10, posZ: getRandomInt(ZONE1_Z_MIN, ZONE1_Z_MAX),
   rx: 0, ry: Math.PI/6.0, rz: 0,
   zone: 1,
-  desc: "어허, 모든 걸 다 지켜보고 있다니까?!"
+  ko: "어허, 모든 걸 다 지켜보고 있다니까?!",
+  en: "We're watching you..."
 }
 const orangeCone = {
   url: 'models/zone1/orangeCone.glb',
@@ -213,7 +238,8 @@ const orangeCone = {
   rx: 0, ry: -Math.PI/3.5, rz: 0,
   zone: 1,
   name: "purpleCone",
-  desc: "감시 드론 항시 작동중! 허튼 짓 금물!"
+  ko: "감시 드론 항시 작동중! 허튼 짓 금물!",
+  en: "Never hunt drones. Surveillance mode 24/7"
 }
 const blueCone = {
   url: 'models/zone1/blueCone.glb',
@@ -222,7 +248,8 @@ const blueCone = {
   rx: 0, ry: Math.PI/6.0, rz: 0,
   zone: 1,
   name: "blueCone",
-  desc: "그런데 로봇이 인간을 먹어서 뭐하겠어? 사실은 인간 아닐까?"
+  ko: "그런데 로봇이 인간을 먹어서 뭐하겠어? 사실은 인간 아닐까?",
+  en: "No illegal trade allowed! Watch out cannibal robots!"
 }
 const pinkCone = {
   url: 'models/zone1/pinkCone.glb',
@@ -231,7 +258,8 @@ const pinkCone = {
   rx: 0, ry: 0, rz: 0,
   zone: 1,
   name: "pinkCone",
-  desc: "로봇과 인간 모두 3원칙을 잘 지켜야지 우리 동네 장사도 잘 유지된다고. 그게 그렇게 어려워?"
+  ko: "로봇과 인간 모두 3원칙을 잘 지켜야지 우리 동네 장사도 잘 유지된다고. 그게 그렇게 어려워?",
+  en: "3 Laws of Robotics, 3 Laws of Humans."
 }
 const rocket = {
   url: 'models/zone1/rocket.glb',
@@ -240,7 +268,8 @@ const rocket = {
   rx: 0, ry: 0, rz: 0,
   zone: 1,
   name: "rocket",
-  desc: "난 여기에서 로켓을 만들어 우주로 떠날거야"
+  ko: "난 여기에서 로켓을 만들어 우주로 떠날거야",
+  en: "I'm making a rocket for space-travel."
  }
 export const ZONE_ONE_MODELS = [ rocket, pinkCone, orangeCone, blueCone, robotBird, robotTiger, robotChip, robotCrane, bird1, bird2, bird3, neoneyes, robotGuide, ozRobot, humanworker, neonsign ]
 
@@ -250,7 +279,8 @@ const tape = {
   // posX: getRandomInt(ZONE2_X_MIN, ZONE2_X_MAX), posY: 10, posZ: getRandomInt(ZONE2_Z_MIN, ZONE2_Z_MAX),
   rx: 0, ry: 0, rz: 0,
   zone: 2,
-  desc: "저 아이팟보다 내가 훨씬 오래됐다고! 요즘은 나 같은 애 보기 힘들 걸?"
+  ko: "저 아이팟보다 내가 훨씬 오래됐다고! 요즘은 나 같은 애 보기 힘들 걸?",
+  en: "I'm much older than iPod. I'm special!"
 }
 
 const fork = {
@@ -258,7 +288,8 @@ const fork = {
   posX: 450, posY: 10, posZ: -3550,
   rx: 0, ry: 0, rz: 0,
   zone: 2,
-  desc: "을지로 맛집? 나 정도는 되야 안다고 할 수 있지."
+  ko: "을지로 맛집? 나 정도는 되야 안다고 할 수 있지.",
+  en: "I'm the legit foodie around here."
 }
 
 const weed = {
@@ -267,7 +298,8 @@ const weed = {
   rx: 0, ry: -Math.PI/2, rz: 0,
   scale: 1,
   zone: 2,
-  desc: "모두 나를 보면 금방 잠들더라..."
+  ko: "모두들 쉬엄 쉬엄 해...",
+  en: "yall need to chill..."
 }
 
 const spaSign = {
@@ -278,7 +310,8 @@ const spaSign = {
   rx: 0, ry: Math.PI/3.0, rz: 0,
   scale: 1,
   zone: 2,
-  desc: "아주 오래 전에 이 간판이 무슨 의미였는지 아는 사람?"
+  ko: "아주 오래 전에 이 간판이 무슨 의미였는지 아는 사람?",
+  en: "Do you know what this sign was in the old times?" 
 }
 const camera = {
   url: 'models/zone2/camera.glb',
@@ -286,7 +319,8 @@ const camera = {
   rx: 0, ry: 0, rz: 0,
   scale: 1,
   zone: 2,
-  desc: "내가 옛날에 찍은 을지로 사진들 보면 너무 힙해서 모두 기절할걸"
+  ko: "내가 옛날에 찍은 을지로 사진들 보면 너무 힙해서 모두 기절할걸",
+  en: "You'll love the old photos I took in Euljiro. "
 }
 
 const ipod = {
@@ -295,7 +329,8 @@ const ipod = {
   rx: 0, ry: Math.PI/4, rz: 0,
   scale: 1,
   zone: 2,
-  desc: "hi... i love music ... thank you and you...?"
+  ko: "hi... i love music ... thank you and you...?",
+  en: "hi... i love music ... thank you and you...?"
 }
 
 const oldPhone = {
@@ -304,7 +339,8 @@ const oldPhone = {
   rx: 0, ry: Math.PI/6.0, rz: 0,
   scale: 1,
   zone: 2,
-  desc: "질린다고 할 땐 언제고 이제는 특이해서 좋다나."
+  ko: "질린다고 할 땐 언제고 이제는 특이해서 좋다나.",
+  en: "For some reason, people want me back..?"
 }
 
 const cheese = {
@@ -312,7 +348,8 @@ const cheese = {
   posX: -800, posY: 0, posZ: -4200,
   rx: 0, ry: 0, rz: 0,
   zone: 2,
-  desc: "나는 진짜 치즈일까 치즈케이크일까. 여기는 을지로일까 아닐까."
+  ko: "나는 진짜 치즈일까 치즈케이크일까. 여기는 을지로일까 아닐까.",
+  en: "Am I a real cheese or cheesecake? Is this a real Euljiro or not?" 
 }
 
 const knife = {
@@ -320,7 +357,8 @@ const knife = {
   posX: -800, posY: 200, posZ: -4200,
   rx: Math.PI, ry: -Math.PI/2.0, rz: 0,
   zone: 2,
-  desc: "모든 맛집에 내가 없으면 안 되니까, 내가 여기서 짱이야"
+  ko: "모든 맛집에 내가 없으면 안 되니까, 내가 여기서 짱이야",
+  en: "All restaruants need me, so I'm the most popular one."
 }
 
 const bear = {
@@ -329,7 +367,8 @@ const bear = {
   rx: 0, ry: Math.PI/5, rz: 0,
   scale:50,
   zone: 2,
-  desc: "나만큼 유행 안타고 스테디셀러인 애가 없지. 실수로 눈을 잃어버렸더니 특이하다고 더 좋아하더라니까?"
+  ko: "실수로 눈을 잃어버렸더니 특이하다고 더 좋아하더라니까?",
+  en: "I lost my eyes and they still think I'm cute?"
 }
 
 const purpleSunglass = {
@@ -338,7 +377,8 @@ const purpleSunglass = {
   rx: 0, ry: 0, rz: 0,
   scale: 100,
   zone: 2,
-  desc: "여기서 우리만큼 힙한 애들 봤어?"
+  ko: "여기서 우리만큼 힙한 애들 봤어?",
+  en: "tbh, we're the legit hipster in Euljiro." 
 }
 
 const greenSunglass = {
@@ -346,7 +386,8 @@ const greenSunglass = {
   posX: -1100, posY: 0, posZ: -4000,
   rx: 0, ry: 0, rz: 0,
   zone: 2,
-  desc: "내가 잘 어울리는 사람은 진정한 힙스터로 인정해줄게"
+  ko: "내가 잘 어울리는 사람은 진정한 힙스터로 인정해줄게",
+  en: "If you can pull me off, I'd approve you."
 }
 
 const orangeSunglass = {
@@ -354,7 +395,8 @@ const orangeSunglass = {
   posX: -800, posY: 0, posZ: -2500,
   rx: 0, ry: 0, rz: 0,
   zone: 2,
-  desc: "아무나 우리랑 어울릴 수 없지. 함부로 다가오지 못할걸."
+  ko: "아무나 우리랑 어울릴 수 없지. 함부로 다가오지 못할걸.",
+  en: "You can't sit with us."
 }
 
 const pabloShutter = {
@@ -363,7 +405,8 @@ const pabloShutter = {
   rx: 0, ry: -Math.PI/2.0, rz: 0,
   scale: 70,
   zone: 2,
-  desc: "을지로는 가을이었다. by 파블로"
+  ko: "을지로는 가을이었다. by 파블로",
+  en: "A masterpiece by Pablo the painter."
 }
 
 const lionShutter = {
@@ -372,7 +415,8 @@ const lionShutter = {
   rx: 0, ry: -Math.PI/3, rz: 0,
   scale: 100,
   zone: 2,
-  desc: "사자의 모습으로 냥냥 펀치를 하면 이뻐해주겠지?"
+  ko: "냥냥 펀치를 하면 이뻐해주겠지?",
+  en: "I can be a cat. Please pet me?"
 }
 const catfishShutter = {
   url: 'models/zone2/anim/Catfish.glb',
@@ -380,14 +424,16 @@ const catfishShutter = {
   rx: 0, ry: -Math.PI/3, rz: 0,
   scale: 100,
   zone: 2,
-  desc: "예전에는 겨울에 이렇게 생긴 걸 먹었다네...?"
+  ko: "예전에는 겨울에 이렇게 생긴 걸 먹었다네...?",
+  en: "They used to eat this kinda snack in the old days..." 
 }
 const diamondShutter = {
   url: 'models/zone2/diamond.glb',
   posX: 700, posY: 0, posZ: -4400,
   rx: 0, ry: Math.PI/2, rz: 0,
   zone: 2,
-  desc: "이 구역의 힙스터는 나야"
+  ko: "이 구역의 힙스터는 나야",
+  en: "I'm the bougie hipster around here." 
 }
 
 export const ZONE_TWO_MODELS = [ bear, fork, weed, tape, knife, cheese, camera, ipod, oldPhone, spaSign,
@@ -405,7 +451,8 @@ const bnb = {
   rx: 0, ry: 0, rz: 0,
   // zone: 3,
   name: "coins",
-  desc: "본 작품은 특정 상품이나 서비스의 판매나 투자권유 또는 조언을 위하여 제작된 것이 아닙니다."
+  ko: "본 작품은 특정 상품이나 서비스의 판매나 투자권유 또는 조언을 위하여 제작된 것이 아닙니다.",
+  en: " Nothing contained in this website should be construed as investment advice."
 }
 
 const eth = {
@@ -414,7 +461,8 @@ const eth = {
   rx: 0, ry: 0, rz: 0,
   // zone: 3,
   name: "coins",
-  desc: "본 작품은 특정 상품이나 서비스의 판매나 투자권유 또는 조언을 위하여 제작된 것이 아닙니다."
+  ko: "본 작품은 특정 상품이나 서비스의 판매나 투자권유 또는 조언을 위하여 제작된 것이 아닙니다.",
+  en: " Nothing contained in this website should be construed as investment advice."
 }
 
 const btc = {
@@ -423,7 +471,8 @@ const btc = {
   rx: 0, ry: 0, rz: 0,
   // zone: 3,
   name: "coins",
-  desc: "본 작품은 특정 상품이나 서비스의 판매나 투자권유 또는 조언을 위하여 제작된 것이 아닙니다."
+  ko: "본 작품은 특정 상품이나 서비스의 판매나 투자권유 또는 조언을 위하여 제작된 것이 아닙니다.",
+  en: " Nothing contained in this website should be construed as investment advice."
 }
 
 export const ZONE_THREE_MODELS = [ bnb, eth, btc ]

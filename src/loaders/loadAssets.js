@@ -153,10 +153,13 @@ export function onLoadAnimation(model, data, scene) {
   dummy.scale.set(100, 50, 100) 
 
   // scene.add(dummy)
+  const lang =  window.localStorage.getItem('language')
   dummy.name = data.name;
-  if(data.desc) {
-    dummy.desc = data.desc;
-  }
+  if(lang === 'en') {
+    dummy.desc = data.en
+  } else {
+    dummy.desc = data.ko
+  } 
   // console.log("dummy for bounding box", dummy)
   // const boxhelper = new THREE.BoxHelper( dummy, 0xff0000 );
   // boxhelper.setFromObject(dummy)
