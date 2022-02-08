@@ -103,7 +103,8 @@ export function renderBuildings (scene, randNum, posArr) {
         mesh.setMatrixAt(i, matrix)
         // mesh.zone = 3;
         mesh.name = 'apt'
-        mesh.desc= '수직 상승의 기회, 잡고 싶니?'
+        mesh.descKO = '수직 상승의 기회, 잡고 싶니?'
+        mesh.descEN = "Do you wanna catch this Quantum Loop opportunity?"
         mesh.needsUpdate = true;
 
         // enable tick

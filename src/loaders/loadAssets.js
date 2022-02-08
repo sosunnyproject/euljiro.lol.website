@@ -149,17 +149,13 @@ export function onLoadAnimation(model, data, scene) {
 
   // add dummy 
   const dummy = new THREE.Mesh(cylinderRay, mat)
-  dummy.position.set(posX, 0, posZ)
-  dummy.scale.set(100, 50, 100) 
+  dummy.position.set(posX, 20, posZ)
+  dummy.scale.set(70, 40, 70) 
 
   // scene.add(dummy)
-  const lang =  window.localStorage.getItem('language')
   dummy.name = data.name;
-  if(lang === 'en') {
-    dummy.desc = data.en
-  } else {
-    dummy.desc = data.ko
-  } 
+  dummy.descEN = data.en
+  dummy.descKO = data.ko
   // console.log("dummy for bounding box", dummy)
   // const boxhelper = new THREE.BoxHelper( dummy, 0xff0000 );
   // boxhelper.setFromObject(dummy)

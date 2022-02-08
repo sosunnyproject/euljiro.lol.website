@@ -61,9 +61,9 @@ export function updateLoadingProgress(max) {
   console.log("update loading: ", currLoaded)
 
   if(value < 100) {
-    notice.innerHTML='로딩중... Loading...';
+    notice.innerHTML=' 로딩중... Loading...  <br> *컴퓨터, 크롬 브라우저 권장. <br /> *Recommend PC, Mac, Chrome Browser<br /> ';
   } else if (value >= 100) {
-      notice.innerHTML = `로딩이 완료되었습니다. <br> Ready to Start.`
+    notice.innerHTML = `로딩이 완료되었습니다. Ready to Start. <br> *컴퓨터, 크롬 브라우저 권장. <br /> *Recommend PC, Mac, Chrome Browser<br /> `
   }
   if (value <= 50) {
     var degree = 18*value/5;

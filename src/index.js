@@ -552,7 +552,12 @@ function checkPointerControls() {
     const onObject = intersections.length > 0;
     if(onObject) {
       // console.log(intersections[0].object?.name)
-      showDescription(  intersections[0].object?.desc ||  intersections[0].object?.name )
+      if(window.localStorage.getItem('language') === 'en') {
+        showDescription(  intersections[0].object?.descEN ||  intersections[0].object?.name )
+      } else {
+        showDescription(  intersections[0].object?.descKO ||  intersections[0].object?.name )
+
+      }
     }
 
     // control speed of movement
