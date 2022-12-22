@@ -11,7 +11,7 @@ import * as Nodes from 'three/examples/jsm/nodes/Nodes.js';
 import Stats from 'three/examples/jsm/libs/stats.module';
 import { WEBGL } from 'three/examples/jsm/WebGL.js';
 
-import { updateStepNum, retrieveEnergy, showDescription, showHowto, warnLowEnergy } from './services/utils';
+import { initHtml, updateStepNum, retrieveEnergy, showDescription, showHowto, warnLowEnergy } from './services/utils';
 import { MONUMENTS_MODELS } from './loaders/glbLoader.js';
 import { loadAssets, loadZoneOneModels, loadZoneTwoModels, loadZoneParkModels, onLoadAnimation, loadZoneThreeModels } from './loaders/loadAssets'
 
@@ -27,8 +27,10 @@ const frame = new Nodes.NodeFrame();
 let prevTime = performance.now();
 const velocity = new THREE.Vector3();
 const direction = new THREE.Vector3();
-let popupOpen = true;
+let popupOpen = false;
 let myHeight = 50;
+window.GAMESCENE = false;
+window.EXP_PAGE = 0;
 
 // Loading manager for 3d models and animation
 window.MIXERS = [];
@@ -290,8 +292,9 @@ function init() {
   } else {
     console.log("init")
     initStats();
-    main()
-    tick()
+    main();
+    tick();
+    initHtml();
   }
 
   window.addEventListener( 'resize', onWindowResize );
@@ -665,7 +668,7 @@ const onKeyDown = function ( event ) {
     case 'ArrowLeft':
     case 'KeyA':
       if(popupOpen) {
-        showHowto(-1)
+        // showHowto(-1)
       } else {
         moveLeft = true;
       }
@@ -679,7 +682,7 @@ const onKeyDown = function ( event ) {
     case 'ArrowRight':
     case 'KeyD':
       if(popupOpen) {
-        showHowto(1)
+        // showHowto(1)
       } else {
         moveRight = true;
       }
@@ -691,9 +694,9 @@ const onKeyDown = function ( event ) {
       break;
     
     case 'KeyI':
-      popupOpen = !popupOpen;
-      console.log(popupOpen)
-      togglePopup()
+      // popupOpen = !popupOpen;
+      // console.log(popupOpen)
+      // togglePopup()
       break;
   }
 };
@@ -896,6 +899,7 @@ if (window.gamepadConnected) {
 // Pointer Lock Controls & Instructions
 const instructions = document.getElementById( 'instructions' );
 const blocker = document.getElementById( 'blocker' );
+const startButton = document.querySelector("#start-button");
 
 pointerControls.addEventListener('change', function () {
 
@@ -907,16 +911,19 @@ pointerControls.addEventListener('change', function () {
     
 })
 
-blocker.addEventListener( 'click', function () {
+startButton.addEventListener('click', function () {
   pointerControls.lock();
 
-  const howtoPopup = document.querySelector(".popup");
-  howtoPopup.classList.add("show");
+  // const howtoPopup = document.querySelector(".popup");
+  // howtoPopup.classList.add("show");
 
   const energyHtml = document.querySelector( '.energyContainer' );
   energyHtml.style.visibility = 'visible';
   // loadSounds()
   // tick();  // start animate after blocker is gone
+})
+blocker.addEventListener( 'click', function () {
+  
 } );
 
 pointerControls.addEventListener( 'lock', function () {

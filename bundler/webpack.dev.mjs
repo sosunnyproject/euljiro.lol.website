@@ -1,15 +1,19 @@
-const path = require('path')
-const { merge } = require('webpack-merge')
-const commonConfiguration = require('./webpack.common.js')
-const ip = require('internal-ip')
-const portFinderSync = require('portfinder-sync')
+import path from "path";
+import {fileURLToPath} from 'url';
+import { merge } from "webpack-merge";
+import commonConfiguration from "./webpack.common.mjs";
+import {internalIpV6, internalIpV4} from 'internal-ip';
+import portFinderSync from "portfinder-sync";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const infoColor = (_message) =>
 {
     return `\u001b[1m\u001b[34m${_message}\u001b[39m\u001b[22m`
 }
 
-module.exports = merge(
+export default merge(
     commonConfiguration,
     {
         stats: 'errors-warnings',
@@ -26,7 +30,7 @@ module.exports = merge(
             static:
             {
                 watch: true,
-                directory: path.join(__dirname, '../static')
+                directory: path.resolve(__dirname, '../static')
             },
             client:
             {
@@ -34,11 +38,11 @@ module.exports = merge(
                 overlay: true,
                 progress: false
             },
-            onAfterSetupMiddleware: function(devServer)
+            onAfterSetupMiddleware: async function(devServer)
             {
                 const port = devServer.options.port
                 const https = devServer.options.https ? 's' : ''
-                const localIp = ip.v4.sync()
+                const localIp = await internalIpV4();
                 const domain1 = `http${https}://${localIp}:${port}`
                 const domain2 = `http${https}://localhost:${port}`
                 

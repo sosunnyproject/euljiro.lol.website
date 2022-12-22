@@ -1,20 +1,16 @@
 
 @font-face {
- font-family: "JJIBBA";
- src: url('../static/assets/fonts/UhBeeJJIBBABBA.woff')
-}
-@font-face {
- font-family: "kangja";
- src: url('../static/assets/fonts/UhBeeKang-Ja.woff')
-}
-@font-face {
  font-family: "itim";
  src: url('../static/assets/fonts/Itim-Regular.woff')
+}
+@font-face {
+font-family: "sunflower";
+src: url('../static/assets/fonts/Sunflower-Medium.woff')
 }
 html, body {
 	 margin: 0; 
 		overflow: hidden;
-		font-family: "kangja", "itim", serif;
+		font-family: "itim", "sunflower", serif;
 }
 
 #introBackground {
@@ -24,38 +20,47 @@ html, body {
 	z-index: 30;
 	text-align: center;
 	font-size: 2.0rem;
-	background-image:linear-gradient(rgba(0, 0, 0, 0.727),rgba(0, 0, 0, 0.7)),url('../static/assets/intro4.gif');
-	background-size:20%;
+	background-image:linear-gradient(rgba(0, 0, 0, 0.727),rgba(0, 0, 0, 0.9)),url('../static/assets/intro4.gif');
+	background-size:40%;
 	background-attachment: fixed;
+}
+.introWrapper {
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
 }
 #introText {
 	color: white;
 	font-size: 2.4rem;
 }
-.option-wrapper {
+.font-16 {
 	 font-size: 1.6rem;
-	 margin: 4.0rem;
 }
 
 input[type='radio'] { 
 	transform: scale(2); 
 }
-#nextButton{
-		font-family: "kangja", "itim", serif;
+.startButton{
+		font-family: "itim", "sunflower", serif;
 		font-size: 2.0rem;
 		border: none;
 		border-radius: 10px;
 		padding: 0 1.0rem 1.2rem 1.0rem;
 		box-shadow: 0 9px #999;
 }
-#nextButton:hover {
+.startButton#disabled {
+	background-color: #666;
+}
+.startButton#able:hover {
 	background-color: rgb(0, 255, 255);
 }
-#nextButton:active {
+.startButton#able:active {
 	background-color: rgb(0, 255, 255);
 	box-shadow: 0 3px #666;
 	transform: translateY(4px);
 }
+
 canvas {
 	width: 100%;
 	height: 100%;
@@ -129,7 +134,7 @@ a:visited {
 	font-weight: 500;
 	cursor: pointer;
 	color: white;
-	font-family: "kangja", "itim", serif;
+	font-family: "itim", "sunflower", serif;
 }
 
 .descPopup {
@@ -167,7 +172,7 @@ a:visited {
 	 z-index: 1;
    }
    .energyBar {
-     font-family: "kangja", "itim", serif;
+     font-family: "itim", "sunflower", serif;
      display: flex;
      justify-content: center;
      font-size: 20px;
@@ -210,28 +215,49 @@ a:visited {
 	font-size: 1.6rem;
 	font-weight: 300;
 	color: white;
-	font-family: "kangja", "itim", serif;
+	font-family: "itim", "sunflower", serif;
 	text-align: center;
 }
 
 #instructions {
 	width: 100%;
-	/* height: 100%;
+	height: 100%;
 	display: flex;
-	justify-content: center;
-	align-items: center; */
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
 	margin-left: 10px;
 	margin-right: 10px;
-	cursor: pointer;
 }
-#loadingContainer {
-	margin-top: 3.0rem;
+.exp-wrapper {
+	text-align: center;
+	padding: 1.0rem;
+	background-color: black;
+	border-radius: 5%;
+	min-height: 20rem;
+	min-width: 70%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+.inst-button {
+	cursor: pointer;
+	border-radius: 3px;
+	color: white;
+	padding: 10px;
+	border: 2px solid white;
+	background-color: #000000;
+	font-size: 16px;
+}
+.margin {
+	margin: 2.0rem;
 	/* margin-right: 1.0rem; */
 	/* font-size: 2.0rem; */
 	/* position: absolute; */
 	/* top: 0; */
 	/* right: 0; */
-
+}
+.grey-text{
 	font-size: 1.6rem;
 	color: #bbb;
 	text-align: center;
