@@ -1,4 +1,4 @@
-# Three.js Journey
+# Sample version of Euljiro.xyz
 
 ## Setup
 Download [Node.js](https://nodejs.org/en/download/).
