@@ -20,6 +20,8 @@ import { instantiateZone3 } from './render/zone3';
 import { renderShutter } from './render/zone1';
 import { instantiateParkObj } from './render/park';
 import { renderGrounds, renderMountain } from './render/global';
+import { xboxAxesPressed, xboxKeyPressed } from './services/keyboardInputs';
+import { loadSounds } from './services/sounds';
 
 // Global Variables
 let stats, composer, nodepass, screen, blurScreen;  // render pass
@@ -27,8 +29,8 @@ const frame = new Nodes.NodeFrame();
 let prevTime = performance.now();
 const velocity = new THREE.Vector3();
 const direction = new THREE.Vector3();
-let popupOpen = false;
 let myHeight = 50;
+export let popupOpen = false;
 window.GAMESCENE = false;
 window.EXP_PAGE = 0;
 
@@ -70,10 +72,10 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(sizes.WIDTH, sizes.HEIGHT);
 
 // Object
-const geometry = new THREE.BoxGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
-const mesh = new THREE.Mesh(geometry, material)
-scene.add(mesh)
+// const geometry = new THREE.BoxGeometry(1, 1, 1)
+// const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
+// const mesh = new THREE.Mesh(geometry, material)
+// scene.add(mesh)
 
 // Node Pass
 let nodepost = new Nodes.NodePostProcessing( renderer );
@@ -83,7 +85,7 @@ const params = {
   fov: 60,
   aspect: window.innerWidth/window.innerHeight, 
   zNear: 1,
-  zFar: 20000
+  zFar: 10000
 }
 function makeCamera() {
   const { fov, aspect, zNear, zFar} = params;  // the canvas default
@@ -102,13 +104,6 @@ controls.enableZoom = true;
 controls.enableDamping = true;
 controls.update();
 
-// EventListener for Debug
-// window.addEventListener('click', function () {
-
-//  console.log("check position:", pointerControls.getObject().position) 
-//  // console.log("check rotation:", pointerControls.getObject().rotation)
-// })
-
 // Raycaster
 const rayOrigin = new THREE.Vector3()
 const rayDirection = new THREE.Vector3( -1, 0, 0 )
@@ -119,7 +114,7 @@ let raycaster2 = new THREE.Raycaster(rayOrigin, rayZ, 0, 100); // rayOrigin, ray
 
 // Zones
 window.STEP_LIMIT = 3500
-window.ZONE = ""
+window.ZONE = null
 window.DYNAMIC_LOADED = false;
 window.ZONE_CHANGED = false;
 window.ACC_STEPS = window.STEP_LIMIT;
@@ -129,21 +124,11 @@ window.PREV_STEPS = window.STEP_LIMIT;
 window.STALE = 0;
 // Clock: autoStart, elapsedTime, oldTime, running, startTime
 var clock = new THREE.Clock();
-const pointerControls = new PointerLockControls(camera, document.body);
+export const pointerControls = new PointerLockControls(camera, document.body);
 
 // init()
 
-function togglePopup () {
-  var popup = document.querySelector(".popup");
-  if(popupOpen) {
-    popup.classList.add("show");
-    showHowto(0)
-  } else {
-    popup.classList.remove("show")
-  }
-}
-
-function resetPosition() {
+export function resetPosition() {
   camera.position.x = 300;
   camera.position.y = 10;
   camera.position.z = 100;
@@ -154,7 +139,7 @@ function resetPosition() {
   }
 }
 
-function checkCameraLoadAssets(currentPos)  {
+export function checkCameraLoadAssets(currentPos)  {
 
   // Zone 1
   const centerX1 = ZONE_POS.ONE.x
@@ -232,7 +217,7 @@ function isZoneChanged(zone) {
    window.ZONE = zone;
    notifyZones(zone)
   } else {
-    console.log("same zone", zone)
+    // console.log("same zone", zone)
   }
 }
 
@@ -383,6 +368,55 @@ function gradientBlurScreen(delta) {
   // console.log("blur nodes", blurScreen, blurScreen.radius.x)
 }
 
+let zone1BridgeBB;
+let shutterBB_left, shutterBB_right, shutterBB_back;
+{
+  // x: 6051 ~ 7061, z: -50
+  // x: 6051 ~ 7061, z: 50
+  const shutterGeometry = new THREE.BoxGeometry( 1000, 100, 20 ); 
+  const shutterMaterial = new THREE.MeshBasicMaterial( {color: 0x00ff00} ); 
+  const _leftShutterBBMesh = new THREE.Mesh( shutterGeometry, shutterMaterial ); 
+  _leftShutterBBMesh.position.set(6051 + 500, 50, 50)
+  // scene.add( _leftShutterBBMesh );
+
+  // Update mesh matrix world
+  _leftShutterBBMesh.updateMatrixWorld();
+
+  // Update shutter bounding box
+  _leftShutterBBMesh.geometry.computeBoundingBox();
+  shutterBB_left = new THREE.Box3();
+  shutterBB_left.copy(_leftShutterBBMesh.geometry.boundingBox).applyMatrix4(_leftShutterBBMesh.matrixWorld);
+
+  const _rightShutterBBMesh = new THREE.Mesh( shutterGeometry, shutterMaterial ); 
+  _rightShutterBBMesh.position.set(6051 + 500, 50, -50)
+  // scene.add( _rightShutterBBMesh );
+
+  _rightShutterBBMesh.updateMatrixWorld();
+  _rightShutterBBMesh.geometry.computeBoundingBox();
+  shutterBB_right = new THREE.Box3();
+  shutterBB_right.copy(_rightShutterBBMesh.geometry.boundingBox).applyMatrix4(_rightShutterBBMesh.matrixWorld);
+
+  const shutterSmallGeometry = new THREE.BoxGeometry( 60, 100, 120 ); 
+  const _backShuttleBBMesh = new THREE.Mesh( shutterSmallGeometry, shutterMaterial );
+  _backShuttleBBMesh.position.set(7085, 50, 0)
+  // scene.add( _backShuttleBBMesh );
+  _backShuttleBBMesh.updateMatrixWorld();
+  _backShuttleBBMesh.geometry.computeBoundingBox();
+  shutterBB_back = new THREE.Box3();
+  shutterBB_back.copy(_backShuttleBBMesh.geometry.boundingBox).applyMatrix4(_backShuttleBBMesh.matrixWorld);
+
+  // zone1 entrance. rectangle zone 500(z) x 3000(x), x: 4500
+  const bridgeGeometry = new THREE.BoxGeometry( 1000, 100, 500 );
+  const _zone1BridgeBBMesh = new THREE.Mesh( bridgeGeometry, shutterMaterial );
+  _zone1BridgeBBMesh.position.set(5500, 50, 0);
+  // scene.add(_zone1BridgeBBMesh);
+
+  _zone1BridgeBBMesh.updateMatrixWorld();
+  _zone1BridgeBBMesh.geometry.computeBoundingBox();
+  zone1BridgeBB = new THREE.Box3();
+  zone1BridgeBB.copy(_zone1BridgeBBMesh.geometry.boundingBox).applyMatrix4(_zone1BridgeBBMesh.matrixWorld);
+}
+
 function loadDefaultEnvironment() {
   
   renderGrounds(scene)
@@ -463,79 +497,6 @@ function unloadParkModels() {
 }
  */
 
-function loadSounds() {
-    
-  // audio test
-  try {
-
-  const listener = new THREE.AudioListener();
-  camera.add(listener)
-
-  const sound1 = new THREE.PositionalAudio( listener );
-  sound1.setVolume(3.0)
-  sound1.setLoop(true)
-
-  const zone1Song = document.getElementById( 'zone1' );
-  sound1.setMediaElementSource( zone1Song );
-  sound1.setRefDistance( 60 );
-  sound1.setMaxDistance( ZONE_RADIUS.ONE )
-  zone1Song.play();
-  
-  const centerSphere = new THREE.SphereGeometry(100, 10, 10)
-  const material = new THREE.MeshPhongMaterial( { color: 0xff2200, opacity: 0.0, transparent: true } );
-  const mesh = new THREE.Mesh( centerSphere, material );
-  mesh.position.set(ZONE_POS.ONE.x + 600, ZONE_POS.ONE.y + 200, ZONE_POS.ONE.z)
-  scene.add( mesh );
-  mesh.add(sound1)
-
-  // park
-  const sound4 = new THREE.PositionalAudio( listener );
-  sound4.setVolume(4.0)
-  sound4.setLoop(true)
-  const parkSong = document.getElementById( 'zonepark' );
-  sound4.setMediaElementSource( parkSong );
-  sound4.setRefDistance( 80 );
-  sound4.setMaxDistance( ZONE_RADIUS.GARDEN )
-  parkSong.play();
-  
-  const parkMesh = new THREE.Mesh( centerSphere.clone(), material );
-  parkMesh.position.set(ZONE_POS.GARDEN.x , ZONE_POS.GARDEN.y + 400, ZONE_POS.GARDEN.z)
-  scene.add( parkMesh );
-  parkMesh.add(sound4)
-
-  // zone2 
-  const sound2 = new THREE.PositionalAudio( listener );
-  sound2.setVolume(3.0)
-  sound2.setLoop(true)
-  const zone2Song = document.getElementById( 'zone2' );
-  sound2.setMediaElementSource( zone2Song );
-  sound2.setRefDistance( 30 );
-  sound2.setMaxDistance( 200 )
-  zone2Song.play();
-  const zone2Mesh = new THREE.Mesh( centerSphere.clone(), material );
-  zone2Mesh.position.set(ZONE_POS.TWO.x , ZONE_POS.TWO.y + 200, ZONE_POS.TWO.z)
-  scene.add( zone2Mesh );
-  zone2Mesh.add(sound2)
-
-  // zone3
-  const sound3 = new THREE.PositionalAudio( listener );
-  sound3.setVolume(2.5)
-  sound3.setLoop(true)
-  const zone3Song = document.getElementById( 'zone3' );
-  sound3.setMediaElementSource( zone3Song );
-  sound3.setRefDistance( 30 );
-  sound3.setMaxDistance( 200 )
-  zone3Song.play();
-  const zone3Mesh = new THREE.Mesh( centerSphere.clone(), material );
-  zone3Mesh.position.set(ZONE_POS.THREE.x , ZONE_POS.THREE.y + 300, ZONE_POS.THREE.z)
-  scene.add( zone3Mesh );
-  console.log("add zone3 sound")
-  zone3Mesh.add(sound3)
-  } catch (err) {
-    console.log("sounds: ", err)
-  }
-}
-
 function checkPointerControls() {
   const time = performance.now();
   const currentPosition = pointerControls?.getObject().position
@@ -565,38 +526,38 @@ function checkPointerControls() {
 
     // control speed of movement
     const delta = ( time - prevTime ) / 250;  // larger dividend, slower
-
     velocity.x -= velocity.x * 10.0 * delta;
     velocity.z -= velocity.z * 10.0 * delta;
 
     velocity.y -= 9.8 * 100.0 * delta;
 
-    direction.z = Number( moveForward ) - Number( moveBackward );
-    direction.x = Number( moveRight ) - Number( moveLeft );
+    direction.z = Number( moveDir.moveForward ) - Number( moveDir.moveBackward );
+    direction.x = Number( moveDir.moveRight ) - Number( moveDir.moveLeft );
     direction.normalize(); // this ensures consistent movements in all directions
 
-    if ( moveForward || moveBackward ) velocity.z -= direction.z * 400.0 * delta;
-    if ( moveLeft || moveRight ) velocity.x -= direction.x * 400.0 * delta;
+    if ( moveDir.moveForward || moveDir.moveBackward ) velocity.z -= direction.z * 400.0 * delta;
+    if ( moveDir.moveLeft || moveDir.moveRight ) velocity.x -= direction.x * 400.0 * delta;
 
     if ( onObject === true ) {
       // console.log("JUMP YES")
       velocity.y = Math.max( 0, velocity.y);
-      canJump = true;
+      moveDir.canJump = true;
 
     }
 
     pointerControls.moveRight( - velocity.x * delta );
     pointerControls.moveForward( - velocity.z * delta );
 
+    // if(window.ZONE){
+    //   pointerControls.getObject().position.y += ( velocity.y * delta ); // new behavior
+    // } else {
+    //   pointerControls.getObject().position.y -= 5;
+    // }
     pointerControls.getObject().position.y += ( velocity.y * delta ); // new behavior
-
     if ( pointerControls.getObject().position.y < myHeight ) {
-
       velocity.y = 0;
       pointerControls.getObject().position.y = myHeight;
-
-      canJump = true;
-
+      moveDir.canJump = true;
     }
   }
 
@@ -653,89 +614,18 @@ function render() {
   stats.update()
 }
 
-// Key Controls
-const onKeyDown = function ( event ) {
-  updateStepNum()
-  if(window.ACC_STEPS <= 0) resetPosition()
-
-  switch ( event.code ) {
-
-    case 'ArrowUp':
-    case 'KeyW':
-      moveForward = true;
-      break;
-
-    case 'ArrowLeft':
-    case 'KeyA':
-      if(popupOpen) {
-        // showHowto(-1)
-      } else {
-        moveLeft = true;
-      }
-      break;
-
-    case 'ArrowDown':
-    case 'KeyS':
-      moveBackward = true;
-      break;
-
-    case 'ArrowRight':
-    case 'KeyD':
-      if(popupOpen) {
-        // showHowto(1)
-      } else {
-        moveRight = true;
-      }
-      break;
-
-    case 'Space':
-      if ( canJump === true ) velocity.y += 650;
-      canJump = false;
-      break;
-    
-    case 'KeyI':
-      // popupOpen = !popupOpen;
-      // console.log(popupOpen)
-      // togglePopup()
-      break;
-  }
-};
-
-const onKeyUp = function ( event ) {
-
-  switch ( event.code ) {
-
-    case 'ArrowUp':
-    case 'KeyW':
-      moveForward = false;
-      break;
-
-    case 'ArrowLeft':
-    case 'KeyA':
-      moveLeft = false;
-      break;
-
-    case 'ArrowDown':
-    case 'KeyS':
-      moveBackward = false;
-      break;
-
-    case 'ArrowRight':
-    case 'KeyD':
-      moveRight = false;
-      break;
-  }
-};
 document.addEventListener( 'keydown', onKeyDown );
 document.addEventListener( 'keyup', onKeyUp );
 
 // GamePad Interaction
 window.gamepadConnected = false;
-let moveForward = false;
-let moveBackward = false;
-let moveLeft = false;
-let moveRight = false;
-let canJump = false;
+export let moveDir = {
+  moveForward: false,
+  moveBackward: false,
+  moveLeft: false,
+  moveRight: false,
+  canJump: false
+}
 
 window.addEventListener("gamepadconnected", function(e) {
   console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",
@@ -748,154 +638,6 @@ window.addEventListener("gamepaddisconnected", function(e) {
   window.gamepadConnected = false;
 })
 
-// gamepad before init
-function xboxKeyPressed (gamepad) {
-  if(!gamepad) {
-    console.log("ERROR: XBOX CONNECTION LOST")
-    return
-  }
-
-  if(window.ACC_STEPS <= 0) resetPosition()
-
-
-  let currentPos = pointerControls.getObject().position
-  checkCameraLoadAssets(currentPos);
-  // let per = Math.floor((window.ACC_STEPS / stepLimit) * 100 )
-  // updateStepProgress(per)
-
-  const buttons = gamepad.buttons;
-
-  if(buttons[1].touched) {  // B button
-    console.log("b btn clicked")
-    console.log(buttons[1].touched)
-    console.log(pointerControls)
-    if(!pointerControls?.isLocked) {
-      console.log(pointerControls)
-      console.log(pointerControls.isLocked)
-
-      // start howto popup in the beginning
-      const howtoPopup = document.querySelector(".popup");
-      howtoPopup.classList.add("show");
-      try {
-        pointerControls?.lock();
-      } catch (err) {
-        console.log(err)
-      }
-    }
-  }
-
-  if(buttons[12].touched) {  // up
-    moveForward = true;
-    updateStepNum()
-  } 
-  if(!buttons[12].touched) {
-    moveForward = false;
-  }
-  if(buttons[15].touched) {
-    moveRight = true;
-    updateStepNum()
-  }
-  if(!buttons[15].touched){
-    moveRight = false;
-  }
-  if(buttons[13].touched) {
-    moveBackward = true;
-    updateStepNum()
-  }
-  if(!buttons[13].touched){
-    moveBackward = false;
-  }
-  if(buttons[14].touched) {
-    moveLeft = true;
-    updateStepNum()
-  }
-  if(!buttons[14].touched){
-    moveLeft = false;
-  }
-  if(buttons[3].pressed) {
-    if ( canJump === true ) velocity.y += 650;
-    canJump = false;
-    return;
-  }
-  if(buttons[0].pressed) {  // open popup
-    if(!popupOpen && buttons[0].value) {
-      popupOpen = true;
-      togglePopup()
-    }
-    // control for howto popup slide
-    if(popupOpen){
-      console.log("popup? ", popupOpen)
-      // const btnVal = buttons[0].pressed;
-      showHowto(0)
-      // setTimeout(showHowto(), 2000)
-    }
-    return;
-  }
-  if(buttons[2].pressed) { // close popup
-    popupOpen = false;
-    console.log(popupOpen)
-    togglePopup()
-    window.HOWTOPAGE = 1;
-    return;
-  }
-  if(buttons[8].pressed) {
-    console.log("reset")
-    location.reload()
-    return;
-  }
-}
-
-let prevAxisX = 0;
-let prevAxisY = 0;
-let staleX = 0;
-let staleY = 0;
-
-function xboxAxesPressed(gamepad) {
-  const _euler = new THREE.Euler( 0, 0, 0, 'YXZ' );
-  const minPolarAngle = 0; // radians
-  const maxPolarAngle = Math.PI; // radians 
-  const _PI_2 = Math.PI / 2;
-
-  const movementX = gamepad.axes[2]
-  const movementY = gamepad.axes[3]
-
-  prevAxisY === movementY ? staleY++ : staleY = 0;
-  prevAxisX === movementX ? staleX++ : staleX = 0; 
-
-  if(staleX > 10 && staleY > 10){  // prevent constant camera rotation
-    return
-  } else {
-    _euler.setFromQuaternion( camera.quaternion );
-  
-    _euler.y -= movementX * 0.02;
-    _euler.x -= movementY * 0.02;
-  
-    _euler.x = Math.max( _PI_2 - maxPolarAngle, Math.min( _PI_2 - minPolarAngle, _euler.x ) );
-  
-    camera.quaternion.setFromEuler( _euler );
-  }
-
-  prevAxisX = movementX;
-  prevAxisY = movementY;
-}
-/**
-if (window.gamepadConnected) {
-  const gamepad = navigator.getGamepads()[0];
-  
-  if(!gamepad) {
-    console.log("ERROR: XBOX CONNECTION LOST") 
-    return;
-
-  } else {
-    try {
-      xboxKeyPressed(gamepad);
-      xboxAxesPressed(gamepad);
-    } catch (err) {
-      console.log("XBOX ERROR: ", err)
-    }  
-  }
-} 
- */
 // Pointer Lock Controls & Instructions
 const instructions = document.getElementById( 'instructions' );
 const blocker = document.getElementById( 'blocker' );
@@ -919,7 +661,7 @@ startButton.addEventListener('click', function () {
 
   const energyHtml = document.querySelector( '.energyContainer' );
   energyHtml.style.visibility = 'visible';
-  // loadSounds()
+  loadSounds(scene, camera)
   // tick();  // start animate after blocker is gone
 })
 blocker.addEventListener( 'click', function () {
@@ -930,7 +672,7 @@ pointerControls.addEventListener( 'lock', function () {
   instructions.style.display = 'none';
   blocker.style.display = 'none';
 
-  loadSounds() // this prevents going back between lock and unlock
+  // this prevents going back between lock and unlock
 } );
 
 pointerControls.addEventListener( 'unlock', function () {
@@ -943,6 +685,41 @@ pointerControls.addEventListener( 'unlock', function () {
 
 function tick() {
   const time = performance.now();
+
+  // check camera bounding box with shutterBB_LEFT
+  let currentPos = pointerControls.getObject().position
+  if(shutterBB_left){
+    const dist = shutterBB_left.distanceToPoint(currentPos)
+    if(dist < 20){
+      console.log("close to shutter left")
+      // velocity.x += velocity.x * 0.005;
+      // pointerControls.moveRight(velocity.x);
+      pointerControls.getObject().position.z -= 6;
+    }
+  }
+  if(shutterBB_right){
+    const dist = shutterBB_right.distanceToPoint(currentPos)
+    if(dist < 20){
+      // console.log("close to shutter right")
+      pointerControls.getObject().position.z += 6;
+    }
+  }
+  if(shutterBB_back){
+    const dist = shutterBB_back.distanceToPoint(currentPos)
+    if(dist < 20){
+      console.log("close to shutter back")
+      pointerControls.getObject().position.x -= 6;
+    }
+  }
+
+  // if(zone1BridgeBB){
+  //   if(zone1BridgeBB.containsPoint(currentPos)) {
+  //     console.log("inside the bridge")
+  //   } else {
+  //     console.log("outside the bridge")
+  //     // drop the fps pos y -= 10 or blackout.
+  //   }
+  // }
 
   // check energy progress
   let energyPercent = ((window.ACC_STEPS/window.STEP_LIMIT)*100) 
@@ -1041,3 +818,80 @@ function onWindowResize() {
   // composer.setSize( window.innerWidth, window.innerHeight );
 
 }
+
+
+// Key Controls
+function onKeyDown ( event ) {
+  // camera position check
+  checkCameraLoadAssets(pointerControls.getObject().position)
+  
+  updateStepNum()
+  if(window.ACC_STEPS <= 0) resetPosition()
+
+  switch ( event.code ) {
+    case 'ArrowUp':
+    case 'KeyW':
+      moveDir.moveForward = true;
+      break;
+
+    case 'ArrowLeft':
+    case 'KeyA':
+      if(popupOpen) {
+        // showHowto(-1)
+      } else {
+        moveDir.moveLeft = true;
+      }
+      break;
+
+    case 'ArrowDown':
+    case 'KeyS':
+      moveDir.moveBackward = true;
+      break;
+
+    case 'ArrowRight':
+    case 'KeyD':
+      if(popupOpen) {
+        // showHowto(1)
+      } else {
+        moveDir.moveRight = true;
+      }
+      break;
+
+    case 'Space':
+      if ( moveDir.canJump === true ) velocity.y += 650;
+      moveDir.canJump = false;
+      break;
+    
+    case 'KeyI':
+      // popupOpen = !popupOpen;
+      // console.log(popupOpen)
+      // togglePopup()
+      break;
+  }
+};
+
+function onKeyUp( event ) {
+
+  switch ( event.code ) {
+
+    case 'ArrowUp':
+    case 'KeyW':
+      moveDir.moveForward = false;
+      break;
+
+    case 'ArrowLeft':
+    case 'KeyA':
+      moveDir.moveLeft = false;
+      break;
+
+    case 'ArrowDown':
+    case 'KeyS':
+      moveDir.moveBackward = false;
+      break;
+
+    case 'ArrowRight':
+    case 'KeyD':
+      moveDir.moveRight = false;
+      break;
+  }
+};

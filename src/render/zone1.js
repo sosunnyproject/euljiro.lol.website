@@ -10,7 +10,7 @@ import shutter5 from '../../static/assets/png/png2jpg/shutterart5.jpg'
 export function renderShutter (scene, posZ) {
     
     // render shutter arts
-
+    
     renderTextureShutter(scene, {x: 6051, y: 50, z: 48}, shutter1)
     renderTextureShutter(scene,  {x: 6253, y: 50, z: 48}, shutter2)
     renderTextureShutter(scene,  {x: 6556, y: 50, z: 48}, shutter3)
@@ -66,14 +66,12 @@ function renderShutterPlane(scene, posZ, material) {
     firstMesh.rotateY(Math.PI/2)
     scene.add(firstMesh)
 
-    // repeat
     const mesh = new THREE.InstancedMesh(shutter, material, 50)
     for(let i = 1; i < 12; i++)
     {
         const position = new THREE.Vector3(
             ZONE_POS.ONE.x + 2550 + i*size + (1*i), 50, posZ       
         )
-        // console.log("shutter", position)
  
         const matrix = new THREE.Matrix4()
         matrix.setPosition(position)
@@ -108,7 +106,6 @@ function renderTextureShutter(scene, position, imageFile) {
             } else {
 
                 texture.matrix.setUvTransform( 0, 0, 1, imageAspect / aspect, 0, 0.5, 0.5 );
-
             }
 
             renderEachShutter(scene, position, material)
@@ -120,10 +117,11 @@ function renderTextureShutter(scene, position, imageFile) {
 
     )
 }
+
 function renderEachShutter(scene, pos, material) {
     const size = 100;
     const height = 300;
-    const shutter = new THREE.PlaneGeometry(size, size, size)
+    const shutter = new THREE.PlaneGeometry(size, size, size);
 
     const mesh = new THREE.Mesh(shutter, material)
     mesh.position.set(pos.x, pos.y, pos.z)
