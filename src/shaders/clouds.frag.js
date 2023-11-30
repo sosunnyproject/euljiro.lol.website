@@ -1,3 +1,5 @@
+// ref: https://www.shadertoy.com/view/4tdSWr
+
 const cloudsFragment = `
 #ifdef GL_ES
 precision mediump float;
